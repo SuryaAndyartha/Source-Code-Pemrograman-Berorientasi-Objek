@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class Clock {
+public class Clock{
     private JFrame frame;
     private JLabel label;
     private JLabel dateLabel;
@@ -11,32 +11,32 @@ public class Clock {
     private boolean clockRunning = false;
     private TimerThread timerThread;
 
-    public Clock() {
+    public Clock(){
         makeFrame();
         clock = new ClockDisplay();
     }
 
-    public void start() {
+    public void start(){
         clockRunning = true;
         timerThread = new TimerThread(this);
         timerThread.start();
     }
 
-    public void stop() {
+    public void stop(){
         clockRunning = false;
     }
 
-    public boolean isRunning() {
+    public boolean isRunning(){
         return clockRunning;
     }
 
-    public void step() {
+    public void step(){
         clock.timeTick();
         label.setText(clock.getTime());
         dateLabel.setText(clock.getDate());
     }
 
-    private void showAbout() {
+    private void showAbout(){
         JOptionPane.showMessageDialog(frame,
             "Tugas Mingguan" + 
             "Membuat Jam",
@@ -44,56 +44,50 @@ public class Clock {
             JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void quit() {
+    private void quit(){
         System.exit(0);
     }
 
-    private void makeFrame() {
-    frame = new JFrame("Clock");
-    JPanel contentPane = (JPanel) frame.getContentPane();
-    contentPane.setBorder(new EmptyBorder(1, 60, 1, 60));
-    makeMenuBar(frame);
+    private void makeFrame(){
+        frame = new JFrame("Clock");
+        JPanel contentPane = (JPanel) frame.getContentPane();
+        contentPane.setBorder(new EmptyBorder(1, 60, 1, 60));
+        makeMenuBar(frame);
+    
+        contentPane.setLayout(new BorderLayout(12, 12));
+    
+        JPanel centerPanel = new JPanel(new BorderLayout());
+    
+        label = new JLabel("00:00:00", SwingConstants.CENTER);
+        Font displayFont = label.getFont().deriveFont(72.0f);
+        label.setFont(displayFont);
+        centerPanel.add(label, BorderLayout.CENTER);
+    
+        dateLabel = new JLabel("dd/MM/yyyy             86°F", SwingConstants.CENTER);
+        Font dateFont = dateLabel.getFont().deriveFont(24.0f);
+        dateLabel.setFont(dateFont);
+        centerPanel.add(dateLabel, BorderLayout.SOUTH);
+    
+        contentPane.add(centerPanel, BorderLayout.CENTER);
+    
+        JPanel toolbar = new JPanel();
+        JButton startButton = new JButton("Start");
+        startButton.addActionListener(e -> start());
+        toolbar.add(startButton);
+    
+        contentPane.add(toolbar, BorderLayout.SOUTH);
+    
+        frame.pack();
+    
+        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(d.width / 2 - frame.getWidth() / 2,
+                          d.height / 2 - frame.getHeight() / 2);
+        frame.setVisible(true);
+    }
 
-    contentPane.setLayout(new BorderLayout(12, 12));
 
-    // Center panel with time and date stacked vertically
-    JPanel centerPanel = new JPanel(new BorderLayout());
-
-    label = new JLabel("00:00:00", SwingConstants.CENTER);
-    Font displayFont = label.getFont().deriveFont(72.0f);
-    label.setFont(displayFont);
-    centerPanel.add(label, BorderLayout.CENTER);
-
-    dateLabel = new JLabel("dd/MM/yyyy             29°C", SwingConstants.CENTER);
-    Font dateFont = dateLabel.getFont().deriveFont(24.0f);
-    dateLabel.setFont(dateFont);
-    centerPanel.add(dateLabel, BorderLayout.SOUTH);
-
-    // Add center panel to content pane
-    contentPane.add(centerPanel, BorderLayout.CENTER);
-
-    // Toolbar at the bottom
-    JPanel toolbar = new JPanel();
-    JButton startButton = new JButton("Start");
-    startButton.addActionListener(e -> start());
-    toolbar.add(startButton);
-
-    contentPane.add(toolbar, BorderLayout.SOUTH);
-
-    frame.pack();
-
-    Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-    frame.setLocation(d.width / 2 - frame.getWidth() / 2,
-                      d.height / 2 - frame.getHeight() / 2);
-    frame.setVisible(true);
-}
-
-    //JPanel flow = new JPanel();
-        //flow.add(toolbar);
-
-    private void makeMenuBar(JFrame frame) {
-        final int SHORTCUT_MASK =
-            Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    private void makeMenuBar(JFrame frame){
+        final int SHORTCUT_MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
         JMenuBar menubar = new JMenuBar();
         frame.setJMenuBar(menubar);
