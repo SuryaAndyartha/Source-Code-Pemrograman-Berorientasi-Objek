@@ -11,24 +11,21 @@ public class ClockDisplay
     private String displayString;
     private String dateString;
 
-    public ClockDisplay()
-    {
+    public ClockDisplay(){
         hours = new NumberDisplay(24);
         minutes = new NumberDisplay(60);
         seconds = new NumberDisplay(60);
         updateFromSystemTime();
-        /*updateDisplay();*/
     }
     
-    public ClockDisplay(int hour, int minute, int second)
-    {
+    public ClockDisplay(int hour, int minute, int second){
         hours = new NumberDisplay(24);
         minutes = new NumberDisplay(60);
         seconds = new NumberDisplay(60);
         setTime(hour, minute, second);
     }
     
-    public void updateFromSystemTime() {
+    public void updateFromSystemTime(){
         LocalDateTime now = LocalDateTime.now();
         hours.setValue(now.getHour());
         minutes.setValue(now.getMinute());
@@ -38,43 +35,28 @@ public class ClockDisplay
         updateDisplay();
     }
 
-    public void timeTick()
-    {
+    public void timeTick(){
         updateFromSystemTime();
-        /*seconds.increment();
-        if (seconds.getValue()==0) {
-            minutes.increment();
-            if (minutes.getValue() == 0) {
-                hours.increment();
-            }
-        }
-        updateDisplay();*/
     }
     
-    public void setTime(int hour, int minute, int second)
-    {
+    public void setTime(int hour, int minute, int second){
         hours.setValue(hour);
         minutes.setValue(minute);
         seconds.setValue(second);
         updateDisplay();
     }
     
-    public String getTime()
-    {
+    public String getTime(){
         return displayString;
     }
     
-    public String getDate() {
-        //return dateString;
+    public String getDate(){
         LocalDate today = LocalDate.now();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return today.format(fmt) + "            86°F"; //Hard coded temperature
     }
     
-    private void updateDisplay()
-    {
-        displayString = hours.getDisplayValue() + ":" +
-            minutes.getDisplayValue() + ":" +
-            seconds.getDisplayValue();
+    private void updateDisplay(){
+        displayString = hours.getDisplayValue() + ":" + minutes.getDisplayValue() + ":" + seconds.getDisplayValue();
     }
 }
