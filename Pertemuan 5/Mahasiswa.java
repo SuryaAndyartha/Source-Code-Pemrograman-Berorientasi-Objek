@@ -5,7 +5,7 @@ public class Mahasiswa{
     private String nrp;
     private ArrayList<FRSItem> frs;
 
-    public Mahasiswa(String nama, String nim){
+    public Mahasiswa(String nama, String nrp){
         this.nama = nama;
         this.nrp = nrp;
         this.frs = new ArrayList<>();
